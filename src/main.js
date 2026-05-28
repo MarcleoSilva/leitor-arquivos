@@ -1,7 +1,14 @@
 import chalk from "chalk"
 import fs from "fs"
 
-console.log("hi")
+const file = process.argv[2];
+
+if (!file) {
+    console.log('No .txt file given as input. Please use: node main.js <file>')
+    process.exit()
+}
+
+const text = fs.readFileSync(file, "utf-8")
 
 function getWords(text){
     return text.split(/[,; .\n\t]+/);
@@ -10,10 +17,7 @@ function getWords(text){
 async function countWords(text){
     const array = await getWords(text);
 
-    console.log(array)
     return array.length;
 }
 
-const t = "Era uma vez, ou melhor, talvez duas; Esqueci-me já de tudo. Espero que qualquer coisa, em qualquer lugar, seja alguém"
-
-console.log(await countWords(t))
+console.log(await countWords(text))
